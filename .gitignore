@@ -1,0 +1,5 @@
+**/node_modules
+**/*.pem
+**/dist
+**/credential.*
+**/config.json
