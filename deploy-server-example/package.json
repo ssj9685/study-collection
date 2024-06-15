@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node server"
+    "dev": "node server",
+    "start": "pm2 start server.js"
   },
   "author": "",
   "license": "ISC",
