@@ -11,17 +11,20 @@ interface ArticleInfo {
 }
 
 export default function Home() {
+  const baseUrl =
+    "http://ec2-54-180-235-213.ap-northeast-2.compute.amazonaws.com:4000";
+
   const { data, refetch } = useQuery({
     queryKey: ["article"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:4000");
+      const res = await fetch(baseUrl);
       return res.json() as Promise<ArticleInfo[]>;
     },
   });
 
   const { mutate: addArticle } = useMutation({
     mutationFn: async (params: ArticleInfo) => {
-      return await fetch(`http://localhost:4000`, {
+      return await fetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -36,7 +39,7 @@ export default function Home() {
 
   const { mutate: updateArticle } = useMutation({
     mutationFn: async (params: ArticleInfo) => {
-      return await fetch(`http://localhost:4000/${params.articleno}`, {
+      return await fetch(`${baseUrl}/${params.articleno}`, {
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
@@ -51,7 +54,7 @@ export default function Home() {
 
   const { mutate: deleteArticle } = useMutation({
     mutationFn: async (params: { articleno: number }) => {
-      return await fetch(`http://localhost:4000/${params.articleno}`, {
+      return await fetch(`${baseUrl}/${params.articleno}`, {
         method: "DELETE",
       });
     },
