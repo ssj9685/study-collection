@@ -8,18 +8,22 @@ const port = 443;
 const app = next({ hostname, port });
 const handle = app.getRequestHandler();
 
+const key = fs.readFileSync(
+  "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem"
+);
+
+const cert = fs.readFileSync(
+  "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem"
+);
+
 app
   .prepare()
   .then(() => {
     try {
       createServer(
         {
-          key: fs.readFileSync(
-            "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem"
-          ),
-          cert: fs.readFileSync(
-            "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem"
-          ),
+          key,
+          cert,
         },
         async (req, res) => {
           try {
@@ -34,7 +38,7 @@ app
         console.log(`> Ready on https://${hostname}:${port}`);
       });
     } catch (e) {
-      (e) => console.error(e);
+      console.error(e);
     }
   })
   .catch((e) => console.error(e));
