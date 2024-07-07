@@ -36,9 +36,14 @@ app
             res.end("internal server error");
           }
         }
-      ).listen(port, () => {
-        console.log(`> Ready on https://${hostname}:${port}`);
-      });
+      )
+        .once("error", (err) => {
+          console.error(err);
+          process.exit(1);
+        })
+        .listen(port, () => {
+          console.log(`> Ready on https://${hostname}:${port}`);
+        });
     } catch (e) {
       console.error(e);
     }
