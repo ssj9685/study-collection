@@ -1,4 +1,5 @@
 import { createServer } from "https";
+import fs from "fs";
 import next from "next";
 
 const hostname = "https-test.p-e.kr";
@@ -12,8 +13,12 @@ app
   .then(() => {
     createServer(
       {
-        key: "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem",
-        cert: "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem",
+        key: fs.readFileSync(
+          "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem"
+        ),
+        cert: fs.readFileSync(
+          "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem"
+        ),
       },
       async (req, res) => {
         try {
