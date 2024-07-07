@@ -9,11 +9,13 @@ const app = next({ hostname, port });
 const handle = app.getRequestHandler();
 
 const key = fs.readFileSync(
-  "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem"
+  "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem",
+  { encoding: "utf-8" }
 );
 
 const cert = fs.readFileSync(
-  "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem"
+  "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem",
+  { encoding: "utf-8" }
 );
 
 app
