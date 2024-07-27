@@ -2,19 +2,19 @@ import { createServer } from "https";
 import fs from "fs";
 import next from "next";
 
-const hostname = "https-test.p-e.kr";
-const port = 443;
+const hostname = "deploy-test3.p-e.kr";
+const port = 3000;
 
 const app = next({ hostname, port });
 const handle = app.getRequestHandler();
 
 const key = fs.readFileSync(
-  "/etc/letsencrypt/live/https-test.p-e.kr/privkey.pem",
+  `/etc/letsencrypt/live/${hostname}/privkey.pem`,
   { encoding: "utf-8" }
 );
 
 const cert = fs.readFileSync(
-  "/etc/letsencrypt/live/https-test.p-e.kr/cert.pem",
+  `/etc/letsencrypt/live/${hostname}/cert.pem`,
   { encoding: "utf-8" }
 );
 
