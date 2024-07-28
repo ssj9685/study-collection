@@ -11,8 +11,7 @@ interface ArticleInfo {
 }
 
 export default function Home() {
-  const baseUrl =
-    "http://ec2-54-180-235-213.ap-northeast-2.compute.amazonaws.com:4000";
+  const baseUrl = "https://deploy-test3.p-e.kr:4000";
 
   const { data, refetch } = useQuery({
     queryKey: ["article"],
