@@ -1,13 +1,31 @@
+import https from 'https';
 import express from 'express';
 import cors from 'cors';
 import pg from 'pg';
 import config from './config.json'  with { type: "json" };
+import fs from 'fs';
 
 const app = express()
 app.use(express.json());
 app.use(cors())
 
+const hostname = "deploy-test3.p-e.kr";
 const port = 4000;
+
+const key = fs.readFileSync(
+    `/etc/letsencrypt/live/${hostname}/privkey.pem`,
+    { encoding: "utf-8" }
+);
+
+const cert = fs.readFileSync(
+    `/etc/letsencrypt/live/${hostname}/cert.pem`,
+    { encoding: "utf-8" }
+);
+
+const server = https.createServer({
+    key, cert
+}, app);
+
 const tableName = "guestbook";
 
 const client = new pg.Pool(config);
@@ -86,7 +104,7 @@ app.delete('/:articleno', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
